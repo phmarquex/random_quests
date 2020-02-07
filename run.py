@@ -118,15 +118,15 @@ class Main():
 
             print(str(bag + 1) + '/' + str(self._total_size - self._empty_space))
 
-            if bag == 24:
-                self.findImage('new_bag')
+            # Abrir nova bag quando preencher a primeira
+            if bag == 24: self.findImage('new_bag')
 
             #Step 1
             pyautogui.moveTo(self._npc_rq_x, self._npc_rq_y)
             pyautogui.click()
 
             #Step 2
-            self.findImage('random_quest')            
+            self.findImage('random_quest')
             
             #Step 3
             self.findImage('claim_quest_sack')
@@ -144,11 +144,11 @@ class Main():
 
             #Step 7
             if bag > 23:
-                self.findImageRightClick('angel', 
+                self.findImageRightClick('angel',
                     (self._secound_bag_x + (self._space_between * map.secoundBag[bag - 24][0])), 
                     (self._secound_bag_y + (self._space_between * map.secoundBag[bag - 24][1])))
             else:
-                self.findImageRightClick('new_bag', 
+                self.findImageRightClick('new_bag',
                     (self._first_bag_x + (self._space_between * map.firstBag[bag][0])), 
                     (self._first_bag_y + (self._space_between * map.firstBag[bag][1])))
             
@@ -163,3 +163,31 @@ class Main():
         # Finish Watchtime
         self._time_finish = time.time()
         self.stopWatch(self._time_finish - self._time_start)
+
+        # Close client
+        pyautogui.hotkey('alt', 'f4')
+        self.findImage('ok_close_client')
+
+        # Open Client
+        self.findImage('client')
+
+        # Type login
+        self.findImage('login_field', 0, 15)
+        pyautogui.typewrite(self.user_login)
+
+        # Type Password
+        self.findImage('login_field', 0, 15)
+        pyautogui.typewrite(self.user_password)
+
+        # Login
+        pyautogui.press('enter')
+        self.findImage('timeout_login')
+        sleep(4)
+        pyautogui.press('enter')
+        sleep(2)
+        pyautogui.press('enter')
+        self.findImage('timeout_login')
+        pyautogui.press('enter')
+
+        # Open Bag
+
